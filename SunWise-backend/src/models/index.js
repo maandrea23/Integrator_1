@@ -1,0 +1,31 @@
+import sequelize from "../config/database.js";
+import User from "./User.js";
+import Installer from "./Installer.js";
+import Provider from "./Provider.js";
+import Product from "./Product.js";
+import Estimate from "./Estimate.js";
+import MaterialRecipe from "./MaterialRecipe.js";
+import CityHSP from "./CityHSP.js";
+import ApplianceCatalog from "./ApplianceCatalog.js";
+import QuoteContact from "./QuoteContact.js";
+
+User.hasOne(Installer, { foreignKey: "userId", as: "installerProfile", onDelete: "CASCADE" });
+Installer.belongsTo(User, { foreignKey: "userId", as: "user" });
+User.hasOne(Provider, { foreignKey: "userId", as: "providerProfile", onDelete: "CASCADE" });
+Provider.belongsTo(User, { foreignKey: "userId", as: "user" });
+Provider.hasMany(Product, { foreignKey: "providerId", as: "products", onDelete: "CASCADE" });
+Product.belongsTo(Provider, { foreignKey: "providerId", as: "provider" });
+User.hasMany(Estimate, { foreignKey: "userId", as: "estimates", onDelete: "CASCADE" });
+Estimate.belongsTo(User, { foreignKey: "userId", as: "user" });
+CityHSP.hasMany(Estimate, { foreignKey: "cityHspId", as: "estimates" });
+Estimate.belongsTo(CityHSP, { foreignKey: "cityHspId", as: "cityHsp" });
+Estimate.hasMany(MaterialRecipe, { foreignKey: "estimateId", as: "materials", onDelete: "CASCADE" });
+MaterialRecipe.belongsTo(Estimate, { foreignKey: "estimateId", as: "estimate" });
+Estimate.hasMany(QuoteContact, { foreignKey: "estimateId", as: "contacts", onDelete: "CASCADE" });
+QuoteContact.belongsTo(Estimate, { foreignKey: "estimateId", as: "estimate" });
+Installer.hasMany(QuoteContact, { foreignKey: "installerId", as: "contacts", onDelete: "CASCADE" });
+QuoteContact.belongsTo(Installer, { foreignKey: "installerId", as: "installer" });
+Provider.hasMany(QuoteContact, { foreignKey: "providerId", as: "contacts", onDelete: "CASCADE" });
+QuoteContact.belongsTo(Provider, { foreignKey: "providerId", as: "provider" });
+
+export { sequelize, User, Installer, Provider, Product, Estimate, MaterialRecipe, CityHSP, ApplianceCatalog, QuoteContact };
