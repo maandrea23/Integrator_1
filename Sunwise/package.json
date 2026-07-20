@@ -1,5 +1,5 @@
 {
-  "name": "package.json",
+  "name": "sunwise",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -10,5 +10,10 @@
   },
   "devDependencies": {
     "vite": "^8.1.1"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.3.2",
+    "json-server": "^1.0.0-beta.15",
+    "tailwindcss": "^4.3.2"
   }
 }
