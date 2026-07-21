@@ -1,14 +1,13 @@
 services:
   postgres:
     image: postgres:17-alpine
-    container_name: sunwise-postgres
     restart: unless-stopped
     environment:
       POSTGRES_DB: sunwise
       POSTGRES_USER: sunwise
       POSTGRES_PASSWORD: sunwise_local_2026
     ports:
-      - "5433:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - sunwise_postgres_data:/var/lib/postgresql/data
     healthcheck:

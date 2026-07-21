@@ -7,6 +7,14 @@ import { contactForEstimate, getEstimates } from "../api/estimate.js";
 import { getSessionUser, isAuthenticated } from "../services/authService.js";
 import { escapeHtml, money, showFeedback } from "../utils/dom.js";
 
+const categoryImages = {
+  panel: "https://cdn.autosolar.co/images/1002071/panel-solar-550w-24v-monocristalino-perc-ecogreen-thumb.jpg",
+  inverter: "https://www.emergente.com.co/wp-content/uploads/2024/11/Inversor-On-Grid-Solis-Trifasico-5kW-220V.webp",
+  battery: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP61SvwIK9KYWjUxEfty1NIVZ53A6o_NUkRl2DNLGm9w&s=10",
+  cable: "https://solphower.co/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsiZGF0YSI6MTg0ODYxNCwicHVyIjoiYmxvYl9pZCJ9fQ==--38c498d8a27f9fbf0a8da7930b9109fe4228d796/4.jpg?locale=es",
+  protection: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdsTDH_5qlWGzGjdQcXlOFi-wfG6fxONmam7jXJCEYng&s=10"
+};
+
 export default function Marketplace() {
   let selectedProvider = null;
   const load = async (category = "") => {
@@ -14,7 +22,10 @@ export default function Marketplace() {
     target.innerHTML = LoadingState();
     try {
       const { products } = await getProducts(category);
-      target.innerHTML = products.length ? products.map((product) => `<article class="product-card"><div class="product-visual">${({ panel: "▦", inverter: "⚡", battery: "▣", cable: "⌁", protection: "◈" })[product.category]}</div><span class="product-category">${escapeHtml(product.category)}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description || `${product.brand || ""} ${product.model || ""}`)}</p><div class="product-bottom"><strong>${money(product.price)}</strong><small>${product.stock} disponibles</small></div><div class="provider-line"><span>${escapeHtml(product.provider.storeName)} · ★ ${product.provider.rating}</span><button class="btn-outline" data-contact-provider="${product.provider.id}">Contactar</button></div></article>`).join("") : `<div class="empty-state">No hay productos en esta categoría.</div>`;
+      target.innerHTML = products.length ? products.map((product) => `<article class="product-card"><div class="product-visual">
+      <img src="${categoryImages[product.category]}"
+          alt="${escapeHtml(product.name)}"
+          class="product-image""></div><span class="product-category">${escapeHtml(product.category)}</span><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description || `${product.brand || ""} ${product.model || ""}`)}</p><div class="product-bottom"><strong>${money(product.price)}</strong><small>${product.stock} disponibles</small></div><div class="provider-line"><span>${escapeHtml(product.provider.storeName)} · ★ ${product.provider.rating}</span><button class="btn-outline" data-contact-provider="${product.provider.id}">Contactar</button></div></article>`).join("") : `<div class="empty-state">No hay productos en esta categoría.</div>`;
       target.querySelectorAll("[data-contact-provider]").forEach((button) => button.addEventListener("click", async () => {
         if (!isAuthenticated() || getSessionUser()?.role !== "user") { window.location.hash = "/login"; return; }
         selectedProvider = Number(button.dataset.contactProvider);
