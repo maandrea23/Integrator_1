@@ -1,6 +1,10 @@
 @echo off
 setlocal
 cd /d "%~dp0"
+if not exist ".env" (
+  copy /y ".env.example" ".env" >nul
+  echo [SunWise] Se creo backend\.env desde .env.example.
+)
 echo [SunWise] Instalando dependencias del backend...
 call npm.cmd install
 if errorlevel 1 exit /b 1

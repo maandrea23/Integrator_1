@@ -21,11 +21,13 @@ Integrator_1/
 
 ## Running Locally
 
-From `Integrator_1`, run `npm run setup` the first time, then use `npm run dev` to start both services. You can start only the API with `npm run dev:backend`.
+Requirements: Node.js 20.19 or newer and Docker Desktop (or another Docker-compatible engine) running.
 
-Before running the backend, create `backend/.env` from `backend/.env.example`. The `.env` file is not versioned.
+From `Integrator_1`, run `npm run setup` the first time. This installs both the backend and frontend dependencies, creates `backend/.env` from `backend/.env.example` when needed, starts PostgreSQL, creates the tables, and loads the seed data.
 
-This starts an isolated PostgreSQL instance on port `5433`, creates the tables, and loads seed data. The API is available at `http://localhost:3000/api`; the frontend uses that URL by default.
+Then use `npm run dev` to start both services. You can start only the API with `npm run dev:backend`.
+
+The setup starts an isolated PostgreSQL instance on the port configured by `DB_PORT` (`5433` by default). If that port is already in use, choose another one in `backend/.env` before running setup. The API is available at `http://localhost:3000/api`; the Vite development server forwards `/api` requests to it.
 
 After the initial setup, you can also start both services from `Integrator_1` with `./start-sunwise.cmd`. It opens the backend and frontend in separate terminals.
 
