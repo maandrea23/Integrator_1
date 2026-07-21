@@ -2,9 +2,9 @@
   "name": "sunwise-integration",
   "private": true,
   "scripts": {
-    "setup": "npm --prefix SunWise-Backend run setup && npm --prefix SunWise install",
+    "setup": "npm --prefix backend run setup && npm --prefix frontend install",
     "dev": "node scripts/dev.mjs",
-    "dev:backend": "npm --prefix SunWise-Backend run dev",
-    "test": "npm --prefix SunWise-Backend test"
+    "dev:backend": "npm --prefix backend run dev",
+    "test": "npm --prefix backend test"
   }
 }

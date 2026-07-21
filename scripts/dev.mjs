@@ -3,8 +3,8 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const workspace = fileURLToPath(new URL("../", import.meta.url));
-const backendDirectory = path.join(workspace, "SunWise-Backend");
-const frontendDirectory = path.join(workspace, "SunWise");
+const backendDirectory = path.join(workspace, "backend");
+const frontendDirectory = path.join(workspace, "frontend");
 const services = [
   { name: "backend", color: "\u001b[32m", cwd: backendDirectory, args: ["--watch", path.join(backendDirectory, "src", "server.js")] },
   { name: "frontend", color: "\u001b[36m", cwd: frontendDirectory, args: [path.join(frontendDirectory, "node_modules", "vite", "bin", "vite.js"), "--host", "0.0.0.0"] },
