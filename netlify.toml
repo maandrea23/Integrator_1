@@ -1,0 +1,10 @@
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+# Vite sirve una SPA: cualquier ruta del cliente debe cargar la aplicación.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
