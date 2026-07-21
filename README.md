@@ -55,3 +55,6 @@ The `admin`, `installer`, and `provider` routes validate both the JWT and the ro
 - Dashboards: `/api/installers/me`, `/api/installers/contacts`, `/api/providers/me`, `/api/providers/contacts`.
 - Public catalog: `/api/catalog/products`, `/api/catalog/installers`, `/api/catalog/cities`, `/api/catalog/appliances`.
 - Admin CRUD: `/api/admin/{users|installers|providers|products|materials|cities|appliances|estimates}` and `/api/admin/dashboard`.
+
+## Web Page
+https://sunwise-1.netlify.app
