@@ -1,26 +1,29 @@
-# SunWise API
+# SunWise
 
-API REST local construida con Express, PostgreSQL, Sequelize y JWT.
+Aplicación web para la gestión y simulación de soluciones solares. El frontend usa Vite y JavaScript; la API REST usa Express, PostgreSQL, Sequelize y JWT.
 
 ## Estructura
 
 ```text
-src/
-├── config/       # conexión PostgreSQL
-├── controllers/  # casos de uso REST por dominio
-├── middlewares/  # JWT, autorización, validación y errores
-├── models/       # modelos Sequelize y relaciones
-├── routes/       # auth, user, estimate, installer, provider, admin, catalog
-├── scripts/      # sincronización y datos iniciales
-├── services/     # algoritmo fotovoltaico y receta
-├── utils/        # errores y handlers asíncronos
-├── app.js        # composición de Express
-└── server.js     # arranque local
+Integrator_1/
+├── frontend/          # aplicación Vite y vistas de usuario
+│   ├── src/
+│   └── package.json
+├── backend/           # API REST, base de datos y pruebas
+│   ├── src/
+│   ├── test/
+│   ├── .env.example
+│   └── package.json
+├── scripts/dev.mjs    # arranque simultáneo de frontend y backend
+├── package.json       # comandos de integración
+└── start-sunwise.cmd  # alternativa de arranque para Windows
 ```
 
 ## Ejecución
 
 La forma recomendada y multiplataforma es ejecutar desde `Integrator_1`: `npm run setup` la primera vez y `npm run dev` para iniciar todo. También puedes iniciar solo la API con `npm run dev:backend`.
+
+Antes de ejecutar el backend, crea `backend/.env` a partir de `backend/.env.example`. El archivo `.env` no se versiona.
 
 Esto levanta PostgreSQL aislado en el puerto `5433`, crea las tablas y carga los datos iniciales. La API queda en `http://localhost:3000/api`; el frontend espera esa URL por defecto.
 
