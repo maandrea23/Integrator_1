@@ -1,0 +1,14 @@
+{
+  "name": "sunwise-integration",
+  "private": true,
+  "scripts": {
+    "setup": "node scripts/prepare-env.mjs && npm --prefix backend install && npm --prefix frontend install && npm --prefix backend run setup",
+    "dev": "node scripts/dev.mjs",
+    "dev:backend": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix backend test"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}

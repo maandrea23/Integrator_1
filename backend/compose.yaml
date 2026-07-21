@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: sunwise
+      POSTGRES_USER: sunwise
+      POSTGRES_PASSWORD: sunwise_local_2026
+    ports:
+      - "${DB_PORT:-5433}:5432"
+    volumes:
+      - sunwise_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sunwise -d sunwise"]
+      interval: 3s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  sunwise_postgres_data:
