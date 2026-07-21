@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Registro</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <div class="container" id="container">
+
+    <!-- Formulario de Registro -->
+    <div class="form-container sign-up-container">
+      <form action="#">
+        <h1>Crear Cuenta</h1>
+
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+
+        <span>o usa tu correo para registrarte</span>
+
+        <input type="text" placeholder="Nombre completo">
+        <input type="email" placeholder="Correo electrónico">
+
+        <div class="input-row">
+          <input type="password" placeholder="Contraseña">
+          <input type="password" placeholder="Repetir contraseña">
+        </div>
+
+        <label class="terms">
+          <input type="checkbox">
+          <span>Acepto los <a href="#">Términos y Condiciones</a> y la <a href="#">Política de Privacidad</a></span>
+        </label>
+
+        <button type="submit">Crear Cuenta</button>
+      </form>
+    </div>
+
+    <!-- Formulario de Inicio de Sesión -->
+    <div class="form-container sign-in-container">
+      <form action="#">
+        <h1>Iniciar Sesión</h1>
+
+        <div class="social-icons">
+          <a href="#" class="icon"><i class="fa-brands fa-google"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>
+
+        <span>o usa tu cuenta</span>
+
+        <input type="email" placeholder="Correo electrónico">
+        <input type="password" placeholder="Contraseña">
+
+        <a href="#" class="forgot-password">¿Olvidaste tu contraseña?</a>
+
+        <button type="submit">Ingresar</button>
+      </form>
+    </div>
+
+    <!-- Panel deslizante -->
+    <div class="overlay-container">
+      <div class="overlay">
+
+        <div class="overlay-panel overlay-left">
+          <h1>¡Bienvenido de nuevo!</h1>
+          <p>Ingresa tus datos para seguir conectado con nosotros</p>
+          <button class="ghost" id="signIn">Iniciar Sesión</button>
+        </div>
+
+        <div class="overlay-panel overlay-right">
+          <h1>¡Hola!</h1>
+          <p>Regístrate con tus datos para empezar a usar la plataforma</p>
+          <button class="ghost" id="signUp">Registrarse</button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
