@@ -1031,7 +1031,7 @@ button:disabled { opacity: .55; cursor: not-allowed; transform: none !important;
 .installer-card h3 { margin: 8px 0; }
 .installer-card p { color: var(--text-muted); font-size: 14px; }
 .installer-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; color: var(--text-muted); font-size: 12px; }
-.app-modal { width: min(540px,90vw); border: 0; border-radius: 25px; padding: 28px; box-shadow: 0 30px 80px rgba(15,23,42,.25); }
+.app-modal { width: min(540px,90vw); border: 0; border-radius: 25px; padding: 28px; box-shadow: 0 30px 80px rgba(15,23,42,.25); margin:auto; }
 .app-modal::backdrop { background: rgba(15,23,42,.5); backdrop-filter: blur(3px); }
 .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
 .icon-button { border: 0; background: var(--primary-soft); color: var(--primary); width: 36px; height: 36px; border-radius: 50%; font-size: 24px; cursor: pointer; }
