@@ -33,6 +33,27 @@ After the initial setup, you can also start both services from `Integrator_1` wi
 
 The `.cmd` files intentionally use `npm.cmd` so they work even when PowerShell blocks the execution of `npm.ps1`.
 
+## Deploying the frontend
+
+The Vite application is static, but the marketplace and the rest of the dynamic
+views require the Express API and PostgreSQL to be deployed separately. Before
+building the frontend for Netlify (or another static host), set the build
+environment variable below to the public URL of that API, including `/api`:
+
+```text
+VITE_API_URL=https://api.your-domain.com/api
+```
+
+Then trigger a new frontend deploy. Do not use `http://localhost:3000/api` in a
+deployment: `localhost` refers to each visitor's own computer, not the server
+where SunWise is running. If the frontend and API share a domain through a
+reverse proxy, `VITE_API_URL` can be omitted and requests will use `/api`.
+
+Set the backend's `NODE_ENV=production` and `FRONTEND_URL` to the exact public
+frontend origin (for example, `https://your-site.netlify.app`) so CORS permits
+the browser requests. Configure its production PostgreSQL credentials and a
+strong `JWT_SECRET` there as well; never publish `backend/.env`.
+
 The seed creates `admin@sunwise.local` / `Admin123!`; change this password after the first login.
 
 It also creates 3 approved installers, 2 approved providers, and 8 products for the public views. Demo professional accounts use the password `Demo123!`.

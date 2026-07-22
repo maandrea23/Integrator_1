@@ -1,5 +1,9 @@
 const configuredApiUrl = import.meta.env.VITE_API_URL?.trim();
-const API_URL = (configuredApiUrl || (import.meta.env.DEV ? "/api" : "http://localhost:3000/api")).replace(/\/$/, "");
+// In development Vite proxies this path to the local API. In a published build it
+// can either be served by a reverse proxy at the same origin or be overridden
+// with VITE_API_URL at build time. A browser must never try to reach the
+// deployer's localhost.
+const API_URL = (configuredApiUrl || "/api").replace(/\/$/, "");
 
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
@@ -11,7 +15,10 @@ async function fetchWithRetry(url, options) {
     try {
       return await fetch(url, options);
     } catch {
-      const error = new Error(`No se pudo conectar con la API (${API_URL}). Inicia el proyecto desde Integrator_1 con "npm run dev".`);
+      const setupHint = configuredApiUrl
+        ? "Verifica que la API publicada esté disponible y acepte solicitudes desde este sitio."
+        : "Configura VITE_API_URL con la URL pública de la API y vuelve a desplegar el frontend.";
+      const error = new Error(`No se pudo conectar con la API (${API_URL}). ${setupHint}`);
       error.code = "API_UNREACHABLE";
       error.cause = firstError;
       throw error;
