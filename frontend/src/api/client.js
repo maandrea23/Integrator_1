@@ -7,6 +7,15 @@ const API_URL = (configuredApiUrl || "/api").replace(/\/$/, "");
 
 const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 
+function apiConfigurationError() {
+  const setupHint = configuredApiUrl
+    ? "Verifica que la API publicada esté disponible y acepte solicitudes desde este sitio."
+    : "Configura VITE_API_URL con la URL pública de la API y vuelve a desplegar el frontend.";
+  const error = new Error(`No se pudo conectar con la API (${API_URL}). ${setupHint}`);
+  error.code = "API_UNREACHABLE";
+  return error;
+}
+
 async function fetchWithRetry(url, options) {
   try {
     return await fetch(url, options);
@@ -15,11 +24,7 @@ async function fetchWithRetry(url, options) {
     try {
       return await fetch(url, options);
     } catch {
-      const setupHint = configuredApiUrl
-        ? "Verifica que la API publicada esté disponible y acepte solicitudes desde este sitio."
-        : "Configura VITE_API_URL con la URL pública de la API y vuelve a desplegar el frontend.";
-      const error = new Error(`No se pudo conectar con la API (${API_URL}). ${setupHint}`);
-      error.code = "API_UNREACHABLE";
+      const error = apiConfigurationError();
       error.cause = firstError;
       throw error;
     }
@@ -37,7 +42,16 @@ export async function request(path, options = {}) {
     },
   });
 
-  const data = response.status === 204 ? null : await response.json().catch(() => ({}));
+  const isJson = response.headers.get("content-type")?.includes("application/json");
+  if (response.status !== 204 && !isJson) {
+    // Netlify's SPA redirect returns index.html (HTTP 200) for /api when no
+    // backend URL is configured. Treat it as a connection/configuration error.
+    throw apiConfigurationError();
+  }
+
+  const data = response.status === 204 ? null : await response.json().catch(() => {
+    throw apiConfigurationError();
+  });
   if (!response.ok) {
     const error = new Error(data?.error || "No fue posible completar la solicitud");
     error.status = response.status;
