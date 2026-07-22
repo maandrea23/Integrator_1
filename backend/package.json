@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "node --watch src/server.js",
     "start": "node src/server.js",
+    "start:container": "node src/scripts/syncDatabase.js && node src/scripts/seedDatabase.js && node src/server.js",
     "db:up": "docker compose up -d --wait",
     "db:down": "docker compose down",
     "db:sync": "node src/scripts/syncDatabase.js",

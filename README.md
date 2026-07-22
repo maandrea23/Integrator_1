@@ -54,6 +54,34 @@ frontend origin (for example, `https://your-site.netlify.app`) so CORS permits
 the browser requests. Configure its production PostgreSQL credentials and a
 strong `JWT_SECRET` there as well; never publish `backend/.env`.
 
+### Deploying the API with Docker
+
+`backend/compose.yaml` is for the local database used during development. To
+run the complete production stack (Express API and PostgreSQL) in Docker, use
+the separate production configuration:
+
+```bash
+cd backend
+cp .env.production.example .env.production
+# Edit .env.production: use a real FRONTEND_URL and replace DB_PASSWORD and JWT_SECRET.
+docker compose --env-file .env.production -f compose.production.yaml up -d --build
+```
+
+Verify the containers and API from the server:
+
+```bash
+docker compose --env-file .env.production -f compose.production.yaml ps
+curl http://localhost:3000/api/health
+curl http://localhost:3000/api/catalog/products
+```
+
+The API container creates the schema and initial marketplace records on its
+first start. Configure HTTPS and route a public domain to port `3000` (or set
+`API_PORT` to the chosen public port). Once
+`https://api.your-domain.com/api/health` returns `{"status":"ok"}`, set
+`VITE_API_URL=https://api.your-domain.com/api` in Netlify and trigger a new
+frontend deploy. Do not use the example placeholder or `localhost` in Netlify.
+
 The seed creates `admin@sunwise.local` / `Admin123!`; change this password after the first login.
 
 It also creates 3 approved installers, 2 approved providers, and 8 products for the public views. Demo professional accounts use the password `Demo123!`.
